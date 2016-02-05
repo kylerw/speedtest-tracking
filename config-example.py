@@ -9,4 +9,6 @@ PLOTLY_USER = ''
 PLOTLY_API = ''
 PLOTLY_NAME = 'Broadband Speed'
 PLOTLY_PUBLIC = False
+NZBGET_URL = '192.168.1.188:8089/nzbget'  #FORMAT-- Host:Port/UrlBase     UrlBase not required, no trailing slash
+NZBGET_THROTTLE = False
 
