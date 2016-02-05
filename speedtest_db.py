@@ -9,7 +9,9 @@ import plotly.plotly as py
 import plotly
 from plotly.graph_objs import *
 import pandas as pd
-
+import urllib,urllib2,json,httplib 
+import requests
+import json
 
 SPEEDTEST_CMD = config.SPEEDTEST_FILE_LOCATION 
 LOG_FILE = config.LOG_FILE
@@ -18,11 +20,16 @@ PLOTLY_USER = config.PLOTLY_USER
 PLOTLY_API = config.PLOTLY_API
 PLOTLY_NAME = config.PLOTLY_NAME
 PLOTLY_PUBLIC = config.PLOTLY_PUBLIC
+NZBGET_URL = config.NZBGET_URL
+NZBGET_THROTTLE = config.NZBGET_THROTTLE
+
+
 
 def main():
   setup_logging()
   try:
     logging.info("Starting test....")
+    pauseNZBGet('pause') 
     ping, download, upload = get_speedtest_results()
   except ValueError as err:
     logging.info("Error ----")
@@ -30,6 +37,7 @@ def main():
   else:
     logging.info("Test successful, results: ")
     logging.info("%5.1f %5.1f %5.1f", ping, download, upload)
+    pauseNZBGet('resume') 
     db_insert(ping, download, upload)
     plotData()
 
@@ -123,6 +131,16 @@ def plotData():
   fig = Figure(data=data, layout=layout)
   py.plot(fig, filename=PLOTLY_NAME, world_readable=PLOTLY_PUBLIC)
 
+def pauseNZBGet(action):
+  url = "%s/jsonrpc" % NZBGET_URL
+  headers = {'content-type': 'application/json'}
+  payload = {
+    "jsonrpc": "2.0", 
+    "method": "pausedownload", 
+    "id": 1
+  }
+
+  response = requests.post(url, data=json.dumps(payload), headers=headers).json() 
 
 
 
