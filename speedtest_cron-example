@@ -1,1 +1,3 @@
+#!/bin/sh
+
 /usr/bin/python /config/speedtest-tracking/speedtest_db.py 
