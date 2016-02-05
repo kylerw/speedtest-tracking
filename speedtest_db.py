@@ -134,11 +134,19 @@ def plotData():
 def pauseNZBGet(action):
   url = "%s/jsonrpc" % NZBGET_URL
   headers = {'content-type': 'application/json'}
-  payload = {
-    "jsonrpc": "2.0", 
-    "method": "pausedownload", 
-    "id": 1
-  }
+  
+  if (action == 'pause'):
+    payload = {
+      "jsonrpc": "2.0", 
+      "method": "pausedownload", 
+      "id": 1
+    } 
+  else:
+    payload = {
+      "jsonrpc": "2.0", 
+      "method": "resumedownload", 
+      "id": 1
+    }
 
   response = requests.post(url, data=json.dumps(payload), headers=headers).json() 
 
@@ -172,11 +180,4 @@ def get_speedtest_results():
 
 if __name__ == '__main__':
   main()
-
-
-
-
-
-
-
 
