@@ -23,14 +23,14 @@ def main():
   setup_logging()
   try:
     logging.info("Starting test....")
-    #ping, download, upload = get_speedtest_results()
+    ping, download, upload = get_speedtest_results()
   except ValueError as err:
     logging.info("Error ----")
     logging.info(err)
   else:
     logging.info("Test successful, results: ")
-    #logging.info("%5.1f %5.1f %5.1f", ping, download, upload)
-    #db_insert(ping, download, upload)
+    logging.info("%5.1f %5.1f %5.1f", ping, download, upload)
+    db_insert(ping, download, upload)
     plotData()
 
 def setup_logging():
