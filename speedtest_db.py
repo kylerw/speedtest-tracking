@@ -83,7 +83,7 @@ def plotData():
 
   df = pd.DataFrame( [[ij for ij in i] for i in rows] )
   df.rename(columns={0: 'id', 1: 'Ping', 2: 'Download', 3: 'Upload', 4:'Date'}, inplace=True);
-  df = df.sort(['Date'], ascending=[1]);
+  df = df.sort_values(['Date'], ascending=[1]);
 
   trace1 = Scatter(
      x=df['Date'],
